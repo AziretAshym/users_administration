@@ -4,8 +4,8 @@ import path from "path";
 import session from "express-session";
 import config from "./config.js";
 import MongoDb from "./mongoDb.js";
-import usersRouter from "./routes/usersRoutes.js";
-import authRouter from "./routes/authRoutes.js";
+import usersRouter from "./src/routes/usersRoutes.js";
+import authRouter from "./src/routes/authRoutes.js";
 
 
 const app = express();

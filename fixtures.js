@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import User from './models/User.js';
+import User from './src/models/User.js';
 
 dotenv.config();
 
@@ -59,13 +59,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secretKey';
         for (const userData of users) {
             const user = new User(userData);
 
-            const token = jwt.sign(
-                { id: user._id, username: user.username },
+            user.token = jwt.sign(
+                {id: user._id, username: user.username},
                 JWT_SECRET,
-                { expiresIn: '7d' }
+                {expiresIn: '7d'}
             );
-
-            user.token = token;
             await user.save();
         }
 

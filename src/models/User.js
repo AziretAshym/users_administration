@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import config from "../config.js";
+import config from "../../config.js";
 
 
 dotenv.config();

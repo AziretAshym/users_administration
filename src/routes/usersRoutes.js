@@ -1,14 +1,8 @@
 import express from "express";
 import User from "../models/User.js";
+import auth from "../middlewares/auth.js";
 
 const usersRouter = express.Router();
-
-function auth(req, res, next) {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
-    next();
-}
 
 usersRouter.get('/', auth, async (req, res) => {
     const sortField = req.query.sort || 'username';
@@ -39,7 +33,7 @@ usersRouter.get('/', auth, async (req, res) => {
 
 usersRouter.get("/new", auth, (req, res) => {
     try {
-        res.render("users/new", { title: "Create User" });
+        res.render("users/new.ejs", { title: "Create User" });
     } catch (e) {
         console.error("Render error:", e);
         res.status(500).send("Render error");
@@ -52,7 +46,7 @@ usersRouter.get('/:id', auth, async (req, res) => {
         if (!user) {
             return res.status(404).render('404', { title: 'User Not Found' });
         }
-        res.render('users/detail', { title: 'User Details', user });
+        res.render('users/detail.ejs', { title: 'User Details', user });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
@@ -94,7 +88,7 @@ usersRouter.get('/:id/edit', auth, async (req, res) => {
         if (!user) {
             return res.status(404).render('404', { title: 'User Not Found' });
         }
-        res.render('users/edit', { title: 'Edit User', user });
+        res.render('users/edit.ejs', { title: 'Edit User', user });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
