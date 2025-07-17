@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import config from "../config.js";
+
 
 dotenv.config();
 
 const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
-const JWT_SECRET = process.env.JWT_SECRET || "secretKey";
 
 const UserSchema = new Schema({
     username: {
@@ -52,9 +53,7 @@ UserSchema.methods.generateToken = function () {
         username: this.username,
     };
 
-    this.token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: "7d",
-    });
+    this.token = jwt.sign(payload, config.jwtSecret, { expiresIn: "7d" });
 };
 
 UserSchema.set("toJSON", {

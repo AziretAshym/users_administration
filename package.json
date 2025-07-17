@@ -2,6 +2,7 @@
   "name": "users_administration",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
     "build": "node index.js",
