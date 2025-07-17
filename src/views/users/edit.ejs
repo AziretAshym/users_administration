@@ -1,0 +1,33 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="container">
+    <h1>Edit User</h1>
+
+    <form action="/users/<%= user._id %>" method="POST">
+
+        <div>
+            <label>First Name:</label>
+            <input type="text" name="first_name" value="<%= user.first_name || '' %>">
+        </div>
+        <div>
+            <label>Last Name:</label>
+            <input type="text" name="last_name" value="<%= user.last_name || '' %>">
+        </div>
+        <div>
+            <label>Gender:</label>
+            <select name="gender">
+                <option value="">--Select--</option>
+                <option value="male" <%= user.gender === 'male' ? 'selected' : '' %>>Male</option>
+                <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Female</option>
+            </select>
+        </div>
+        <div>
+            <label>Birthdate:</label>
+            <input type="date" name="birthdate" value="<%= user.birthdate ? user.birthdate.toISOString().split('T')[0] : '' %>">
+        </div>
+        <button type="submit">Update</button>
+    </form>
+
+    <a href="/users">Back to List</a>
+</div>
+

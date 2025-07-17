@@ -1,0 +1,48 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="container">
+    <h1>Users List</h1>
+
+    <a href="/users/new">Add User</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th><a href="?sort=username&order=<%= sortField === 'username' && sortOrder === 1 ? 'desc' : 'asc' %>&page=<%= currentPage %>">Username</a></th>
+            <th><a href="?sort=first_name&order=<%= sortField === 'first_name' && sortOrder === 1 ? 'desc' : 'asc' %>&page=<%= currentPage %>">First Name</a></th>
+            <th><a href="?sort=gender&order=<%= sortField === 'gender' && sortOrder === 1 ? 'desc' : 'asc' %>&page=<%= currentPage %>">Gender</a></th>
+            <th><a href="?sort=birthdate&order=<%= sortField === 'birthdate' && sortOrder === 1 ? 'desc' : 'asc' %>&page=<%= currentPage %>">Birthdate</a></th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.username %></td>
+                <td><%= user.first_name || '' %></td>
+                <td><%= user.gender %></td>
+                <td><%= user.birthdate ? user.birthdate.toISOString().split('T')[0] : '' %></td>
+                <td>
+                    <a href="/users/<%= user._id %>">View</a> |
+                    <a href="/users/<%= user._id %>/edit">Edit</a> |
+                    <form action="/users/<%= user._id %>/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" onclick="return confirm('Delete this user?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <% if (i === currentPage) { %>
+                <strong><%= i %></strong>
+            <% } else { %>
+                <a href="?page=<%= i %>&sort=<%= sortField %>&order=<%= sortOrder === 1 ? 'asc' : 'desc' %>"><%= i %></a>
+            <% } %>
+        <% } %>
+    </div>
+</div>
+
