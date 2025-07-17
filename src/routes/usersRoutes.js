@@ -27,6 +27,7 @@ usersRouter.get("/", auth, async (req, res, next) => {
             sortField,
             currentPage: page,
             totalPages: Math.ceil(totalUsers / limit),
+            csrfToken: req.csrfToken(),
         });
     } catch (e) {
         next(e);
